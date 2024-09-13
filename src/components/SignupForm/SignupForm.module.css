@@ -1,0 +1,140 @@
+.container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    width: 600px;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 9px;
+    width: 100%;
+    margin-top: 30px;
+}
+
+.text {
+    color: var(--brand-indigo);
+    ;
+    font-size: 44px;
+    font-weight: 700;
+}
+
+.underline {
+    width: 62px;
+    height: 6px;
+    background: var(--brand-indigo);
+    ;
+    border-radius: 9px;
+}
+
+form {
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 40px;
+}
+
+.inputs {
+    margin-top: 55px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.input {
+    display: flex;
+    align-items: center;
+    margin: auto;
+    width: 480px;
+    height: 80px;
+    background: #eaeaea;
+    border-radius: 0.25rem;
+}
+
+.input input {
+    height: 50px;
+    width: 400px;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--grey-800);
+    font-size: 19px;
+    margin-left: 40px;
+}
+
+.createAcc {
+    margin-top: 10px;
+    color: var(--grey-600);
+    font-size: 18px;
+}
+
+.createAcc span {
+    color: var(--brand-indigo);
+    ;
+    cursor: pointer;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.submitContainer {
+    display: flex;
+    gap: 30px;
+    margin: 12px;
+}
+
+.button {
+    font-size: 19px;
+    font-weight: 700;
+
+    color: var(--brand-indigo);
+    text-align: center;
+    width: 480px;
+    margin: auto;
+    padding: 0.5rem !important;
+    background-color: #fff;
+    border: 1px solid var(--brand-indigo);
+    border-radius: 0.25rem;
+    cursor: pointer;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    height: auto !important;
+
+    &:hover {
+        cursor: pointer;
+        background: #3e237f;
+        color: white;
+    }
+}
+
+.googleButton {
+    font-size: 19px;
+    font-weight: 700;
+
+    color: white;
+    text-align: center;
+    width: 480px;
+    margin: auto;
+    padding: 0.5rem !important;
+    background-color: var(--brand-indigo);
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    height: auto !important;
+
+    &:hover {
+        cursor: pointer;
+        background: #2e1a5d;
+        transition: all 0.3s;
+    }
+}
