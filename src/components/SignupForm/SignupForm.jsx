@@ -1,3 +1,4 @@
+import { FcGoogle } from "react-icons/fc";
 import { useContext } from "react"
 import { NavLink } from "react-router-dom";
 import styles from './SignupForm.module.css';
@@ -59,7 +60,7 @@ export default function SignupForm() {
                         </div>
                     </div>
                     <div className={styles.createAcc}>
-                        Already have an account? <span><NavLink to="/">Login</NavLink></span>
+                        Already have an account? <span><NavLink to="/">Sign in here</NavLink></span>
                     </div>
                     <div className={styles.submitContainer}>
                         <button type="submit" className={styles.button} onClick={emailSignup} disabled={loading}>
@@ -69,7 +70,12 @@ export default function SignupForm() {
                     <p style={{ textAlign: "center" }}>or</p>
                     <div className={styles.submitContainer}>
                         <button type="submit" className={styles.googleButton} onClick={handleGoogleSignIn} disabled={loading} >
-                            {loading ? 'Loading...' : 'Signup with Google'}
+                            {loading ? 'Loading...' : (
+                                <>
+                                    <span className={styles.iconGoogle}><FcGoogle /></span>
+                                    Continue with Google
+                                </>
+                            )}
                         </button>
                     </div>
                 </form>

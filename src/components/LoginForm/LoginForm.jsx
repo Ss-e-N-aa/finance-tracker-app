@@ -1,14 +1,10 @@
+import { FcGoogle } from "react-icons/fc";
 import { useContext } from "react"
 import { NavLink } from "react-router-dom";
 import styles from './LoginForm.module.css';
 import { auth, provider } from "../../../firebase";
 import { handleInputChange } from "../../utils/util";
 import UserContext from "../../context/userContext";
-
-/* 
-problems with auth :
-when exit google popup , buttons are disabled 
-*/
 
 export default function LoginForm() {
     const { loading, emailLogin, userState, setUserState, signWithGoogle } = useContext(UserContext)
@@ -53,7 +49,7 @@ export default function LoginForm() {
                         </div>
                     </div>
                     <div className={styles.createAcc}>
-                        Don&apos;t have an account? <span><NavLink to="/signup">Signup</NavLink></span>
+                        <span><NavLink to="/signup">Create an account</NavLink></span>
                     </div>
                     <div className={styles.submitContainer}>
                         <button className={styles.button} onClick={emailLogin} disabled={loading}>
@@ -63,7 +59,12 @@ export default function LoginForm() {
                     <p style={{ textAlign: "center" }}>or</p>
                     <div className={styles.submitContainer}>
                         <button className={styles.googleButton} onClick={handleGoogleLogin} disabled={loading}>
-                            {loading ? 'Loading...' : 'Login with Google'}
+                            {loading ? 'Loading...' : (
+                                <>
+                                    <span className={styles.iconGoogle}><FcGoogle /></span>
+                                    Continue with Google
+                                </>
+                            )}
                         </button>
                     </div>
                 </form>

@@ -28,19 +28,25 @@ export function UserContextProvider({ children }) {
     const [signInWithEmailAndPassword] = useSignInWithEmailAndPassword(auth);
 
     useEffect(() => {
+        const validPaths = ['/', '/signup', '/dashboard'];
         const unsubscribe = onAuthStateChanged(auth, async (user) => {
             if (user) {
-                // User is signed in, fetch and set user data
+                // Always fetch and set userData if the user is logged in
                 await fetchAndSetUserData(user.uid, setUserData);
-                navigate("/dashboard");
+
+                if (validPaths.includes(location.pathname)) {
+                    navigate("/dashboard");
+                }
             } else {
-                // User is signed out, clear the context state
                 setUserData(null);
-                navigate("/");
+
+                // Allow user to stay on /signup if they are not logged in
+                if (location.pathname !== '/signup') {
+                    navigate("/");
+                }
             }
         });
 
-        // Clean up the listener on component unmount
         return () => unsubscribe();
     }, [navigate]);
 
@@ -122,21 +128,6 @@ export function UserContextProvider({ children }) {
             setLoading(false);
         }
     }
-
-    /*   async function signWithGoogle(auth, provider) {
-          setLoading(true);
-          try {
-              const result = await signInWithPopup(auth, provider);
-              await createUserDocument(result.user);
-              toast.success("User Authenticated Successfully!");
-              setLoading(false);
-              navigate("/dashboard");
-          } catch (error) {
-              setLoading(false);
-              toast.error(error.message);
-              console.error("Error signing in with Google: ", error.message);
-          }
-      }; */
 
     async function signWithGoogle(auth, provider) {
         setLoading(true);

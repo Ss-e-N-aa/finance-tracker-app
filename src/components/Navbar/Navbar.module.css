@@ -1,0 +1,5 @@
+.navbar {
+    background-color: var(--grey-0);
+    padding: 2rem 4.8rem;
+    border-bottom: 1px solid var(--grey-200);
+}

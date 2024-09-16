@@ -1,6 +1,6 @@
 .header {
     background-color: var(--brand-indigo);
-    padding: 1.2rem 4.8rem;
+    padding: 1rem 4.8rem;
     position: sticky;
     top: 0;
     left: 0;
@@ -20,7 +20,7 @@
     color: white;
     font-size: 2rem;
     font-weight: 500;
-    opacity: 0.7;
+    opacity: 0.6;
 
     &:hover {
         cursor: pointer;
@@ -28,4 +28,10 @@
         opacity: 1;
         transition: all 0.3s;
     }
+}
+
+.iconLogout {
+    font-size: 22px;
+    margin-right: 10px;
+    vertical-align: middle;
 }
