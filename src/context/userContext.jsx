@@ -28,14 +28,14 @@ export function UserContextProvider({ children }) {
     const [signInWithEmailAndPassword] = useSignInWithEmailAndPassword(auth);
 
     useEffect(() => {
-        const validPaths = ['/', '/signup', '/dashboard'];
+        const validPaths = ['/', '/signup', '/dashboard', '/dashboard/overview'];
         const unsubscribe = onAuthStateChanged(auth, async (user) => {
             if (user) {
                 // Always fetch and set userData if the user is logged in
                 await fetchAndSetUserData(user.uid, setUserData);
 
                 if (validPaths.includes(location.pathname)) {
-                    navigate("/dashboard");
+                    navigate("/dashboard/overview");
                 }
             } else {
                 setUserData(null);
@@ -91,7 +91,7 @@ export function UserContextProvider({ children }) {
             // fetch and set user data
             await fetchAndSetUserData(user.uid, setUserData);
 
-            navigate('/dashboard');
+            navigate("/dashboard/overview");
             toast.success("Sign in successful");
             setLoading(false);
         } catch (error) {
@@ -119,7 +119,7 @@ export function UserContextProvider({ children }) {
             console.log("User Created:", user); // Debug: Check created user
             await createUserDocument(user);
 
-            navigate("/dashboard");
+            navigate("/dashboard/overview");
             toast.success("Sign Up successful");
             setLoading(false);
         } catch (error) {
@@ -139,7 +139,7 @@ export function UserContextProvider({ children }) {
                     .then(async (result) => {
                         await createUserDocument(result.user);
                         toast.success("User Authenticated Successfully!");
-                        navigate("/dashboard");
+                        navigate("/dashboard/overview");
                         resolve(result);
                     })
                     .catch((error) => {

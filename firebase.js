@@ -7,7 +7,7 @@ import { getFirestore, doc, setDoc, getDoc } from 'firebase/firestore';
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-    apiKey: "google-api-key",
+    apiKey: "AIzaSyDc513jvf1NQV9izBmHZNacc3jHoO0YfPk",
     authDomain: "finance-tracker-app-fa0d5.firebaseapp.com",
     projectId: "finance-tracker-app-fa0d5",
     storageBucket: "finance-tracker-app-fa0d5.appspot.com",

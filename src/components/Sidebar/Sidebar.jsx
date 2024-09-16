@@ -12,7 +12,7 @@ export default function Sidebar() {
             <nav>
                 <ul className={styles.ul}>
                     <li>
-                        <NavLink className={styles.link} to='Overview'>
+                        <NavLink className={styles.link} to='overview'>
                             <span className={styles.iconHome}><HiHome /></span>
                             Home
                         </NavLink>
