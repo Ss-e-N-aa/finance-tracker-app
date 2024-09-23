@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;600;700;800;900&display=swap');
+
 *,
 *::before,
 *::after {
@@ -41,6 +43,11 @@ body {
 
     --brand-indigo: #512da8;
 
+    /*  Blue  */
+    --blue-100: #e0f2fe;
+    --blue-600: #155EEF;
+    --blue-700: #0d3fa4;
+
     /* Grey */
     --grey-0: #fff;
     --grey-50: #f9fafb;
@@ -54,8 +61,7 @@ body {
     --grey-800: #1f2937;
     --grey-900: #111827;
 
-    --blue-100: #e0f2fe;
-    --blue-700: #0369a1;
+
     --green-100: #dcfce7;
     --green-700: #15803d;
     --yellow-100: #fef9c3;
@@ -101,7 +107,7 @@ html {
 }
 
 body {
-    font-family: "Poppins", sans-serif;
+    font-family: "Inter", sans-serif;
     color: var(--grey-700);
 
     transition: color 0.3s, background-color 0.3s;

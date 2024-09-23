@@ -24,3 +24,4 @@ export async function fetchAndSetUserData(uid, setUserData) {
         console.error("Error fetching user data: ", error.message);
     }
 }
+

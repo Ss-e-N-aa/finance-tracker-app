@@ -6,6 +6,7 @@ import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { createUserWithEmailAndPassword, signInWithPopup, updateProfile, onAuthStateChanged } from "firebase/auth";
 import { fetchAndSetUserData } from '../utils/util'
 
+// this context is for authentication
 export const UserContext = createContext({
     userState: {
         name: '',
@@ -129,39 +130,29 @@ export function UserContextProvider({ children }) {
         }
     }
 
+    // it works , but it still takes 7 seconds for error to show, when user cancels the popup
     async function signWithGoogle(auth, provider) {
         setLoading(true);
 
         try {
-            // Sign in with a popup and manage the loading state
-            await new Promise((resolve, reject) => {
-                const popup = signInWithPopup(auth, provider)
-                    .then(async (result) => {
-                        await createUserDocument(result.user);
-                        toast.success("User Authenticated Successfully!");
-                        navigate("/dashboard/overview");
-                        resolve(result);
-                    })
-                    .catch((error) => {
+            await signInWithPopup(auth, provider)
+                .then(async (result) => {
+                    await createUserDocument(result.user);
+                    toast.success("User Authenticated Successfully!");
+                    navigate("/dashboard/overview");
+                })
+                .catch((error) => {
+                    if (error.code === 'auth/popup-closed-by-user') {
+                        console.log(error);
+                        toast.error("Google sign-in was canceled by user.");
                         setLoading(false);
+                    } else {
                         toast.error(error.message);
-                        reject(error);
-                    });
-
-                // Monitor popup to handle premature closure
-                const popupMonitor = setInterval(() => {
-                    if (popup && popup.closed) {
-                        clearInterval(popupMonitor);
                         setLoading(false);
-                        toast.error("Google sign-in was canceled.");
-                        reject(new Error("Popup closed by user."));
                     }
-                }, 50);
-            });
-
+                });
         } catch (error) {
             console.error("Error signing in with Google: ", error.message);
-            // Loading state is already handled in the popup promise
         }
     }
 
