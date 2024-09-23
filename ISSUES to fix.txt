@@ -1,3 +1,4 @@
 
-1- problems with auth : when i exit google popup , buttons are still disabled ...i want them to be in 'false' based on the loading state 
-2- accessing an undefined route, i want the error to be displayed in the content area of the dashboard and without a whole page refresh 
+
+1- problems with auth : when user cancels google popup , it takes 7s for the loading state to change ... default behaviour from firebase ? 
+2- accessing an undefined route, i want the error to be displayed in the content area of the dashboard And without a whole page refresh 

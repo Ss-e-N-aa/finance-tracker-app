@@ -25,7 +25,7 @@
         font-size: 1.6rem;
         font-weight: 500;
         padding: 1.2rem 2.4rem;
-        transform: all 0.3s;
+        border-radius: 10px;
     }
 
     &:hover,
@@ -33,7 +33,7 @@
     &:active:link,
     &:active:visited {
         color: var(--grey-800);
-        background-color: var(--grey-50);
+        background-color: var(--brand-50);
         border-radius: 10px;
     }
 }

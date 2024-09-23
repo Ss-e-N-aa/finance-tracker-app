@@ -1,0 +1,60 @@
+/* Overview.css */
+.overview-section {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.card-list {
+    display: flex;
+    gap: 4rem;
+    padding: 0;
+    list-style: none;
+    flex-wrap: wrap;
+}
+
+.card-list li {
+    flex: 1;
+    min-width: 380px;
+}
+
+.transactions-section {
+    margin-top: 2rem;
+}
+
+.expenseChart {
+    margin-top: 2rem;
+}
+
+/* Responsive layout */
+@media (max-width: 768px) {
+    .card-list {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .card-list li {
+        flex: none;
+        width: 100%;
+        min-width: auto;
+    }
+
+    .expenseChart {
+        height: 150px;
+    }
+}
+
+@media (max-width: 480px) {
+    .overview-section {
+        gap: 1.5rem;
+    }
+
+    .transactions-section,
+    .expenseChart {
+        margin-top: 1.5rem;
+    }
+
+    .expenseChart {
+        height: 120px;
+    }
+}
