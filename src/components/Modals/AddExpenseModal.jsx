@@ -3,25 +3,21 @@ import { Modal } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { modalActions } from "../../store/modal-slice";
 import { expenseActions } from '../../store/expense-slice';
-import { addDoc, collection, /* getDocs, query */ } from "firebase/firestore";
-import { db, auth } from '../../../firebase';
-import { toast } from 'react-toastify';
+import { auth } from '../../../firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
-
+import { addTransaction } from '../../store/transactions-slice';
 
 export default function AddExpenseModal() {
-    const [user] = useAuthState(auth);
-
-    const dispatch = useDispatch();
-    const expense = useSelector((state) => state.expense);
     const { showModal, modalType } = useSelector((state) => state.modal);
+    const expense = useSelector((state) => state.expense);
+    const [user] = useAuthState(auth);
+    const dispatch = useDispatch();
 
     const handleCancel = () => {
         dispatch(modalActions.toggle(null)); // Close modal
         dispatch(expenseActions.clearExpense()); // Clear form fields
     };
 
-    // this modal is not ready yet .... !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -34,7 +30,8 @@ export default function AddExpenseModal() {
             tag: expense.tag === "other" ? expense.customTag : expense.tag,
         }
         console.log(newTransaction);
-        /* addTransaction(newTransaction); */
+        dispatch(addTransaction({ uid: user.uid, transaction: newTransaction }));
+        handleCancel();
     };
 
 
@@ -56,6 +53,7 @@ export default function AddExpenseModal() {
                             onChange={(e) => dispatch(expenseActions.setName(e.target.value))}
                         />
                     </div>
+
                     <div className={styles.input}>
                         <input
                             type="number"
@@ -65,6 +63,7 @@ export default function AddExpenseModal() {
                             onChange={(e) => dispatch(expenseActions.setAmount(e.target.value))}
                         />
                     </div>
+
                     <div className={styles.input}>
                         <input
                             type="date"
@@ -73,6 +72,7 @@ export default function AddExpenseModal() {
                             onChange={(e) => dispatch(expenseActions.setDate(e.target.value))}
                         />
                     </div>
+
                     <div className={styles.input}>
                         <select
                             name="tag"
@@ -85,6 +85,7 @@ export default function AddExpenseModal() {
                             <option value="other">Other</option>
                         </select>
                     </div>
+
                     {expense.tag === "other" && (
                         <div className={styles.input}>
                             <input
@@ -96,6 +97,7 @@ export default function AddExpenseModal() {
                             />
                         </div>
                     )}
+
                     <div className={styles.submitContainer}>
                         <button className={styles.button}>Add Expense</button>
                     </div>

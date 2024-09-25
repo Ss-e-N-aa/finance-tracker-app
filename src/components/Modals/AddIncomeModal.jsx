@@ -4,27 +4,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { modalActions } from "../../store/modal-slice";
 import { incomeActions } from '../../store/income-slice'
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { db, auth } from '../../../firebase';
-import { addDoc, collection, getDocs, query } from "firebase/firestore";
-import { toast } from 'react-toastify';
-import { useEffect, useState } from 'react';
-import UserContext from '../../context/userContext';
-import { useContext } from 'react';
-
+import { auth } from '../../../firebase';
+import { addTransaction } from '../../store/transactions-slice';
 
 export default function AddIncomeModal() {
-    const [user] = useAuthState(auth);
-    const dispatch = useDispatch();
     const { showModal, modalType } = useSelector((state) => state.modal);
     const income = useSelector((state) => state.income);
-    const [transactions, setTransactions] = useState([]);
-    const { setLoading } = useContext(UserContext);
+    const [user] = useAuthState(auth);
+    const dispatch = useDispatch();
 
     const handleCancel = () => {
         dispatch(modalActions.toggle(null)); // Close modal
         dispatch(incomeActions.clearIncome()); // Clear form fields
     };
-
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -33,50 +25,14 @@ export default function AddIncomeModal() {
             type: 'income',
             name: income.name || "",
             amount: income.amount || 0,
-            date: income.date || new Date().toISOString().split("T")[0], // Use current date if not selected
+            date: income.date || new Date().toISOString().split("T")[0],
             tag: income.tag === "other" ? income.customTag : income.tag,
         }
         console.log(newTransaction);
-        addTransaction(newTransaction);
+        dispatch(addTransaction({ uid: user.uid, transaction: newTransaction }));
+        handleCancel();
     };
 
-    //should make a seperate slice for transactions / adding and fetching 
-    async function addTransaction(transaction) {
-        try {
-            const docRef = await addDoc(
-                collection(db, `users/${user.uid}/transactions`),
-                transaction
-            )
-            console.log('Document written with ID: ', docRef.id)
-            toast.success('Transaction Added.')
-        } catch (error) {
-            console.log(`Error adding document: `, error)
-            toast.error('Could not add transaction...')
-        }
-    }
-
-    // this is creating an infinite loop ... 
-
-    /*     useEffect(() => {
-            fetchTransactions();
-        }, []); */
-
-    async function fetchTransactions() {
-        setLoading(true);
-        if (user) {
-            const q = query(collection(db, `users/${user.uid}/transactions`));
-            const querySnapshot = await getDocs(q);
-            let transactionsArray = [];
-            querySnapshot.forEach((doc) => {
-                // doc.data() is never undefined for query doc snapshots
-                transactionsArray.push(doc.data());
-            });
-            setTransactions(transactionsArray);
-            console.log(transactionsArray);
-            toast.success("Transactions Fetched!");
-        }
-        setLoading(false);
-    }
 
     return (
         <Modal
@@ -87,7 +43,7 @@ export default function AddIncomeModal() {
         >
             <form onSubmit={handleSubmit}>
                 <div className={styles.inputs}>
-                    {/* Name Input */}
+
                     <div className={styles.input}>
                         <input
                             type="text"
@@ -98,7 +54,7 @@ export default function AddIncomeModal() {
                         />
                     </div>
 
-                    {/* Amount Input */}
+
                     <div className={styles.input}>
                         <input
                             type="number"
@@ -109,7 +65,7 @@ export default function AddIncomeModal() {
                         />
                     </div>
 
-                    {/* Date Input */}
+
                     <div className={styles.input}>
                         <input
                             type="date"
@@ -119,7 +75,6 @@ export default function AddIncomeModal() {
                         />
                     </div>
 
-                    {/* Select Input */}
                     <div className={styles.input}>
                         <select
                             className={styles.select}
@@ -134,7 +89,7 @@ export default function AddIncomeModal() {
                         </select>
                     </div>
 
-                    {/* Custom Text Input for "Other" */}
+
                     {income.tag === "other" && (
                         <div className={styles.input}>
                             <input
@@ -147,7 +102,6 @@ export default function AddIncomeModal() {
                         </div>
                     )}
 
-                    {/* Submit Button */}
                     <div className={styles.submitContainer}>
                         <button className={styles.button}>
                             Add Income

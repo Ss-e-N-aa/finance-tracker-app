@@ -1,20 +1,33 @@
 import Card from '../components/Card/Card';
 import TransactionsTable from '../components/Transactions/TransactionsTable/TransactionsTable';
 import '../styles/Overview.css';
-
-// placeholder
-const transactions = [
-    { description: 'newest transaction', type: 'Entertainment', date: '2024-09-01', amount: '$100' },
-    { description: 'Transaction 2', type: 'Bills', date: '2024-09-02', amount: '$50' },
-    { description: 'oldest transaction', type: 'Subscriptions', date: '2024-09-03', amount: '$200' },
-];
+import { useSelector, useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { fetchTransactions } from '../store/transactions-slice';
+import { transactionsActions } from '../store/transactions-slice';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '../../firebase';
 
 export default function Expenses() {
+    const { transactions, expensesTotal } = useSelector((state) => state.transactions);
+    const dispatch = useDispatch();
+    const [user] = useAuthState(auth);
+
+    // Filter transactions with type 'expense'
+    const expenseTransactions = transactions.filter(transaction => transaction.type === 'expense');
+
+    useEffect(() => {
+        if (user) {
+            dispatch(fetchTransactions(user.uid));
+            dispatch(transactionsActions.calculateBalance());
+        }
+    }, [user, dispatch]);
+
     return (
         <>
             <section className="overview-section">
                 <ul className="card-list">
-                    <li><Card title="Total Expenses" amount="$10,500.25" isFirst={true} addBtn modalType="expense" /></li>
+                    <li><Card title="Total Expenses" amount={expensesTotal} isFirst={true} addBtn modalType="expense" /></li>
                     <li><Card title="Latest Expense" amount="$1,250.00" /></li>
                 </ul>
             </section>
@@ -22,7 +35,7 @@ export default function Expenses() {
             <section className="overview-section">
                 <ul className="card-list">
                     <li>
-                        <TransactionsTable title='Recent Expenses' data={transactions} />
+                        <TransactionsTable title='Recent Expenses' data={expenseTransactions} />
                     </li>
                 </ul>
             </section>
