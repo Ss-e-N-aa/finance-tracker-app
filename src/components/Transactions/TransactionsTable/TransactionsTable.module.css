@@ -1,12 +1,36 @@
-.transactionsSection {
+.transactionsContainer {
     background: #fff;
     border-radius: 12px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    margin: 20px 0;
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+    /* Allows for pagination to stay at the bottom */
 }
 
-.transactionsSection h2 {
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.searchInput {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 200px;
+}
+
+.paginationContainer {
+    display: flex;
+    justify-content: center;
+    margin-top: auto;
+    /* Keeps pagination at the bottom */
+}
+
+.transactionsContainer h2 {
     font-size: 20px;
     font-weight: 500;
     color: var(--grey-500);
@@ -39,5 +63,9 @@
 @media (max-width: 768px) {
     .transactionsTable {
         font-size: 14px;
+    }
+
+    .pagination {
+        font-size: 0.75rem;
     }
 }

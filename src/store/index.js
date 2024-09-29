@@ -1,4 +1,4 @@
-import { configureStore } from '@reduxjs/toolkit'
+import { configureStore } from '@reduxjs/toolkit';
 import modalSlice from './modal-slice';
 import expenseSlice from './expense-slice';
 import incomeSlice from './income-slice';
@@ -10,7 +10,11 @@ const store = configureStore({
         expense: expenseSlice.reducer,
         income: incomeSlice.reducer,
         transactions: transactionsSlice.reducer,
-    }
+    },
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware({
+            serializableCheck: false
+        }),
 });
 
 export default store;

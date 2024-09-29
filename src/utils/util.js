@@ -24,3 +24,19 @@ export async function fetchAndSetUserData(uid, setUserData) {
         console.error("Error fetching user data: ", error.message);
     }
 }
+
+// Utility function to convert Firestore timestamp to readable date
+export const formatFirestoreDate = (timestamp) => {
+    let date;
+
+    // Check if the timestamp is an instance of Firestore Timestamp
+    if (timestamp && typeof timestamp.toMillis === 'function') {
+        date = new Date(timestamp.toMillis());
+    } else if (timestamp instanceof Date) {
+        date = timestamp; // Already a Date object
+    } else {
+        return '';
+    }
+
+    return date.toLocaleString();
+}
