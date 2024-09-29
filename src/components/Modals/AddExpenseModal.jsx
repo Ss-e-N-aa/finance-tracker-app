@@ -6,6 +6,8 @@ import { expenseActions } from '../../store/expense-slice';
 import { auth } from '../../../firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { addTransaction } from '../../store/transactions-slice';
+import { Timestamp } from "firebase/firestore";
+import { toast } from 'react-toastify';
 
 export default function AddExpenseModal() {
     const { showModal, modalType } = useSelector((state) => state.modal);
@@ -18,7 +20,6 @@ export default function AddExpenseModal() {
         dispatch(expenseActions.clearExpense()); // Clear form fields
     };
 
-
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -26,12 +27,13 @@ export default function AddExpenseModal() {
             type: 'expense',
             name: expense.name || "",
             amount: expense.amount || 0,
-            date: expense.date || new Date().toISOString().split("T")[0],
+            date: Timestamp.now(),
             tag: expense.tag === "other" ? expense.customTag : expense.tag,
         }
         console.log(newTransaction);
         dispatch(addTransaction({ uid: user.uid, transaction: newTransaction }));
         handleCancel();
+        toast.success('Transaction Added !');
     };
 
 
@@ -46,6 +48,7 @@ export default function AddExpenseModal() {
                 <div className={styles.inputs}>
                     <div className={styles.input}>
                         <input
+                            required
                             type="text"
                             name="name"
                             placeholder="Name"
@@ -56,6 +59,7 @@ export default function AddExpenseModal() {
 
                     <div className={styles.input}>
                         <input
+                            required
                             type="number"
                             name="amount"
                             placeholder="Amount"
@@ -66,6 +70,7 @@ export default function AddExpenseModal() {
 
                     <div className={styles.input}>
                         <input
+                            required
                             type="date"
                             name="date"
                             value={expense.date}
@@ -75,6 +80,8 @@ export default function AddExpenseModal() {
 
                     <div className={styles.input}>
                         <select
+                            required
+                            className={styles.select}
                             name="tag"
                             value={expense.tag}
                             onChange={(e) => dispatch(expenseActions.setTag(e.target.value))}
@@ -89,6 +96,7 @@ export default function AddExpenseModal() {
                     {expense.tag === "other" && (
                         <div className={styles.input}>
                             <input
+                                required
                                 type="text"
                                 name="customTag"
                                 placeholder="Enter custom tag"

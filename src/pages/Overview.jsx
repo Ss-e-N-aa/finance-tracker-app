@@ -4,30 +4,35 @@ import TransactionsTable from '../components/Transactions/TransactionsTable/Tran
 import TransactionsChart from '../components/Transactions/TransactionsChart/TransactionsChart';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchTransactions } from '../store/transactions-slice';
+import { fetchTransactions, fetchLastExpense, fetchLastIncome } from '../store/transactions-slice';
 import { transactionsActions } from '../store/transactions-slice';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../../firebase';
 
 export default function Overview() {
-    const { transactions, totalBalance } = useSelector((state) => state.transactions);
+    const { transactions, totalBalance, lastExpense, lastIncome, searchTerm } = useSelector((state) => state.transactions);
     const dispatch = useDispatch();
     const [user] = useAuthState(auth);
 
     useEffect(() => {
         if (user) {
             dispatch(fetchTransactions(user.uid));
-            dispatch(transactionsActions.calculateBalance());
+            dispatch(fetchLastExpense(user.uid));
+            dispatch(fetchLastIncome(user.uid));
         }
     }, [user, dispatch]);
+
+    let filteredTransactions = transactions.filter((i) => {
+        return i.type.toLowerCase().includes(searchTerm.toLowerCase());
+    });
 
     return (
         <>
             <section className="overview-section">
                 <ul className="card-list">
                     <li><Card title="Current Balance" amount={totalBalance} isFirst={true} /></li>
-                    <li><Card title="Latest Income" amount="$500" /></li>
-                    <li><Card title="Latest Expense" amount="$200" /></li>
+                    <li><Card title="Last Income" amount={lastIncome ? `${lastIncome.amount}` : ''} /></li>
+                    <li><Card title="Last Expense" amount={lastExpense ? `${lastExpense.amount}` : ''} /></li>
                 </ul>
             </section>
 
@@ -38,7 +43,13 @@ export default function Overview() {
             <section className="overview-section">
                 <ul className="card-list">
                     <li>
-                        <TransactionsTable title='Recent Transactions' data={transactions} isOverview />
+                        <TransactionsTable
+                            title='Recent Transactions'
+                            data={filteredTransactions}
+                            isOverview
+                            searchTerm={searchTerm}
+                            setSearchTerm={(term) => dispatch(transactionsActions.setSearchTerm(term))}
+                        />
                     </li>
                     <li>
                         <TransactionsChart />

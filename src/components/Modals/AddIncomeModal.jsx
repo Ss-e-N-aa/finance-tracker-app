@@ -6,6 +6,8 @@ import { incomeActions } from '../../store/income-slice'
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../../../firebase';
 import { addTransaction } from '../../store/transactions-slice';
+import { Timestamp } from "firebase/firestore";
+import { toast } from 'react-toastify';
 
 export default function AddIncomeModal() {
     const { showModal, modalType } = useSelector((state) => state.modal);
@@ -25,12 +27,14 @@ export default function AddIncomeModal() {
             type: 'income',
             name: income.name || "",
             amount: income.amount || 0,
-            date: income.date || new Date().toISOString().split("T")[0],
+            date: Timestamp.now(),
             tag: income.tag === "other" ? income.customTag : income.tag,
-        }
+        };
+
         console.log(newTransaction);
         dispatch(addTransaction({ uid: user.uid, transaction: newTransaction }));
         handleCancel();
+        toast.success('Transaction Added !');
     };
 
 

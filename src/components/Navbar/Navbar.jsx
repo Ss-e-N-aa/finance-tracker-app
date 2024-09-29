@@ -10,7 +10,7 @@ export default function Navbar() {
     const capitalizedUserName = userData.name.charAt(0).toUpperCase() + userData.name.slice(1);
     return (
         <header className={styles.navbar}>
-            <h3>Welcome to your Dashboard, {capitalizedUserName}</h3>
+            <h3>Welcome , {capitalizedUserName}</h3>
         </header>
     )
 }
