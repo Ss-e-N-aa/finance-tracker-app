@@ -16,4 +16,9 @@ i tried the toDate() but its still giving me non serializable error ... so , i u
 
 - i had a problem with fetching the last income/expense and displaying them both on the ui in Overview page .
 i could only display the last transaction, be it expense or income , on the Card component. one Card was populated with the latest transaction,
-and the other empty (null) ... after some messing around with chatgpt , i had to update the redux state after adding a transaction .
+and the other empty (null) .
+the fix:  after some messing around with chatgpt , i had to update the redux state after adding a transaction .
+
+- when the user doesnt log out , and closes the page then re opens it :  the current balance is not fetched properly .
+i have to switch to another page for the fetching to work again .
+the fix : re calculate balance state after fetching state in transactions-slice extra reducers .

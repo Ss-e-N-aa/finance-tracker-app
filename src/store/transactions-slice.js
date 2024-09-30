@@ -161,6 +161,7 @@ const transactionsSlice = createSlice({
             .addCase(fetchTransactions.fulfilled, (state, action) => {
                 if (action.payload) {
                     state.transactions = action.payload;  // Preserve both incomes and expenses
+                    transactionsSlice.caseReducers.calculateBalance(state); // re-calculate balance
                 }
             })
 
