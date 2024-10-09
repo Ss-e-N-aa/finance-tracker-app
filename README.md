@@ -2,6 +2,9 @@
 
 a React application that helps users manage their personal finances by tracking income, expenses, and savings goals.
 
+## Live website
+https://finance-tracker-app-bay.vercel.app/
+
 ## Project Description
 This is a React application built with Vite that utilizes Firebase for authentication and data management.
 The app also leverages the Context API and Redux for global state management, and integrates Firebase services such as Firestore and Authentication.
