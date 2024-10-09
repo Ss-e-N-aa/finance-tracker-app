@@ -30,10 +30,45 @@ npm install
 ### Or using yarn
 yarn install
 
-### Start Development Server
+## Start Development Server
 ### Using npm
 npm run dev
 
 ### Or using yarn
 yarn dev
 
+## Authentication
+The app uses Firebase Authentication with both Google Sign-In and email/password options. You can log in using these methods, and your credentials will be securely stored in Firebase.
+
+## Transactions Management
+The app allows users to add income and expenses via forms. The data is managed using Redux slices and stored in Firestore.
+
+## State Management
+- **Context**: Manages user authentication state globally.
+- **Redux**:
+- transaction slice handles the state for fetching , adding and deleting the transactions .
+- savings goals slice handles the state for fetching , adding , updating and deleting the goals .
+- dark mode theme slice handles setting and resetting the theme .
+- modal slice handles toggling (opening and closing ) the modals.
+- expense / incomes slices handle setting the form inputs.
+
+## Modals
+Modals are used to add expenses ,incomes , savings goals and to add funds and update these goals . The modal state is managed via Redux in modal-slice.
+
+## Firebase Integration
+
+### Firebase Authentication
+Firebase Authentication is used for user login and signup with Google or email/password. The logic is handled in `src/context/UserContext.js`.
+
+### Firestore
+The logic for adding and fetching transactions can be found in `src/store/transactions-slice.js` 
+The logic for adding and fetching savings goals can be found in `src/store/savingsGoals-slice.js`
+
+### Firebase Setup
+To configure Firebase in your app, Firebase SDK is initialized in `src/firebase.js`. You will need to ensure your Firebase project is properly set up with Firestore and Authentication enabled.
+
+### Usage
+
+Create an account with email/password or Google sign up . 
+start adding incomes , expenses and goals .
+switch the theme in the Settings page . 
