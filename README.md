@@ -19,19 +19,21 @@ Key Features:
 - Firebase Project (set up with Firestore and Authentication enabled)
 
 ### Clone the Repository
-``bash
+
 git clone https://github.com/Ss-e-N-aa/finance-tracker-app.git
 cd finance-tracker-app
 
-# Using npm
+## Install Dependencies
+### Using npm
 npm install
 
-# Or using yarn
+### Or using yarn
 yarn install
 
-# Using npm
+### Start Development Server
+### Using npm
 npm run dev
 
-# Or using yarn
+### Or using yarn
 yarn dev
 
