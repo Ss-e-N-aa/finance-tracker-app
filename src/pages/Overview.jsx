@@ -8,9 +8,11 @@ import { fetchTransactions, fetchLastExpense, fetchLastIncome } from '../store/t
 import { transactionsActions } from '../store/transactions-slice';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../../firebase';
+import GoalsCard from '../components/GoalsCard/GoalsCard';
 
 export default function Overview() {
     const { transactions, totalBalance, lastExpense, lastIncome, searchTerm } = useSelector((state) => state.transactions);
+    const { goalsTotal, progressTotal } = useSelector((state) => state.savingsGoals);
     const dispatch = useDispatch();
     const [user] = useAuthState(auth);
 
@@ -31,15 +33,17 @@ export default function Overview() {
             <section className="overview-section">
                 <ul className="card-list">
                     <li><Card title="Current Balance" amount={totalBalance} isFirst={true} /></li>
+                    <li><GoalsCard title="Total Goals" progressAmount={progressTotal} targetAmount={goalsTotal} isFirst={true} /></li>
+                </ul>
+            </section>
+
+            <section className="overview-section">
+                <ul className="card-list">
                     <li><Card title="Last Income" amount={lastIncome ? `${lastIncome.amount}` : ''} /></li>
                     <li><Card title="Last Expense" amount={lastExpense ? `${lastExpense.amount}` : ''} /></li>
                 </ul>
             </section>
 
-            {/* 
-            i want both of these items to be next each other , with fixed and cohesive ratios 
-            keeping in mind a responsive layout for smaller screens
-            */}
             <section className="overview-section">
                 <ul className="card-list">
                     <li>

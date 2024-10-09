@@ -130,7 +130,6 @@ export function UserContextProvider({ children }) {
         }
     }
 
-    // it works , but it still takes 7 seconds for error to show, when user cancels the popup
     async function signWithGoogle(auth, provider) {
         setLoading(true);
 

@@ -35,3 +35,9 @@
     margin-right: 10px;
     vertical-align: middle;
 }
+
+.darkMode {
+    &.header {
+        background: #352363;
+    }
+}

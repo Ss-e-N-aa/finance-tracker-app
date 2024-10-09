@@ -6,7 +6,7 @@ import { fetchTransactions } from '../../../store/transactions-slice';
 import { transactionsActions } from '../../../store/transactions-slice';
 import { auth } from '../../../../firebase';
 import { Pie } from 'react-chartjs-2';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import { Chart as ChartJS, Tooltip, Legend, ArcElement } from 'chart.js';
 
 // Register the components used in Chart.js
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -15,6 +15,7 @@ export default function TransactionsChart() {
     const dispatch = useDispatch();
     const [user] = useAuthState(auth);
     const { transactions } = useSelector((state) => state.transactions);
+    const isDarkMode = useSelector((state) => state.theme.darkMode);
 
     useEffect(() => {
         if (user) {
@@ -32,8 +33,16 @@ export default function TransactionsChart() {
             {
                 label: 'Transactions',
                 data: [expenseItems.length, incomeItems.length],
-                backgroundColor: ['#666eff', '#66ffc4'],
-                borderColor: ['#666eff', '#66ffc4'],
+                backgroundColor: [
+                    `${isDarkMode ? '#9194d1' : '#666eff'}`
+                    ,
+                    `${isDarkMode ? '#96c4b2' : '#66ffc4'}`,
+                ],
+                borderColor: [
+                    `${isDarkMode ? '#9194d1' : '#666eff'}`
+                    ,
+                    `${isDarkMode ? '#96c4b2' : '#66ffc4'}`,
+                ],
                 borderWidth: 1,
             },
         ],
@@ -57,7 +66,7 @@ export default function TransactionsChart() {
                     padding: 20,
                     boxWidth: 12,
                     boxHeight: 12,
-                    color: '#555',
+                    color: `${isDarkMode ? '#fff' : '#555'}`,
                     font: {
                         size: 14,
                         weight: 'bold',
@@ -77,8 +86,8 @@ export default function TransactionsChart() {
 
     return (
         <>
-            <div className={styles.chartContainer}>
-                <div className={styles.chartPlaceholder}>
+            <div className={`${styles.chartContainer} ${isDarkMode ? styles.darkChartContainer : ''}`}>
+                <div className={`${styles.chartPlaceholder} ${isDarkMode ? styles.darkChartPlaceholder : ''}`}>
                     <Pie data={data} options={options} />
                 </div>
             </div>

@@ -12,6 +12,10 @@
     width: 100%;
 }
 
+.input input:focus {
+    outline: none;
+}
+
 .select {
     height: 40px;
     width: 400px;
@@ -31,6 +35,10 @@
     border-bottom: 1px solid var(--grey-800);
     color: var(--grey-800);
     font-size: 17px;
+}
+
+.input span {
+    margin-left: 50px;
 }
 
 .submitContainer {
@@ -60,5 +68,36 @@
         cursor: pointer;
         background: #3e237f;
         color: white;
+    }
+}
+
+.currProgressAmount {
+    color: var(--blue-600);
+}
+
+.darkMode {
+    background-color: #1f1f1f;
+
+    &.input input,
+    &.input .select {
+        background-color: #1f1f1f;
+        color: var(--grey-200);
+        border-color: var(--grey-200);
+        ;
+    }
+
+    &.button {
+        color: #fff;
+        border: none;
+        background-color: #444444;
+
+        &:hover {
+            background-color: #5bdcdc;
+            color: #000;
+        }
+    }
+
+    &.currProgressAmount {
+        color: #5bdcdc;
     }
 }

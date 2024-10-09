@@ -1,19 +1,20 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { collection, getDocs, addDoc, query, orderBy, limit, where } from 'firebase/firestore';
+import { collection, getDocs, addDoc, query, orderBy, limit, where, doc, deleteDoc } from 'firebase/firestore';
 import { db } from '../../firebase';
+/* import { updateSavingsGoalAmount } from './savingsGoals-slice'; */
 
 // fetching all transactions
 export const fetchTransactions = createAsyncThunk(
     'transactions/fetchTransactions',
     async (uid, { rejectWithValue }) => {
         try {
-            // querying all the transactions to display them from last to first 
-            const q = query(
+            // querying all the transactions to display them from newest to last
+            const docsQueries = query(
                 collection(db, `users/${uid}/transactions`),
                 orderBy('date', 'desc')
             );
 
-            const querySnapshot = await getDocs(q);
+            const querySnapshot = await getDocs(docsQueries);
 
             let transactionsArray = [];
             querySnapshot.forEach((doc) => {
@@ -21,6 +22,7 @@ export const fetchTransactions = createAsyncThunk(
                 transactionsArray.push({
                     ...data,
                     date: data.date.toDate(), // Convert Firebase Timestamp to JS Date
+                    id: doc.id
                 });
             });
             return transactionsArray;
@@ -56,6 +58,7 @@ export const fetchLastExpense = createAsyncThunk(
                 })
             console.log("Last Expense Item:", lastExpenseItem);
             return lastExpenseItem.length > 0 ? lastExpenseItem[0] : null;
+
         } catch (error) {
             return rejectWithValue(error.message || 'Failed to fetch the last expense');
         }
@@ -85,7 +88,7 @@ export const fetchLastIncome = createAsyncThunk(
                         date: data.date.toDate(), // Convert Firebase Timestamp to JS Date
                     };
                 })
-            console.log("Last Expense Item:", lastIncomeItem);
+            console.log("Last Income Item:", lastIncomeItem);
             return lastIncomeItem.length > 0 ? lastIncomeItem[0] : null;
         } catch (error) {
             return rejectWithValue(error.message || 'Failed to fetch the last income');
@@ -100,13 +103,26 @@ export const addTransaction = createAsyncThunk(
     async ({ uid, transaction }, { rejectWithValue }) => {
         try {
             const docRef = await addDoc(collection(db, `users/${uid}/transactions`), transaction);
-            fetchTransactions(uid);
-            return { ...transaction, id: docRef.id }; // Returning the new transaction with ID
+            return { ...transaction, id: docRef.id };
         } catch (error) {
             return rejectWithValue(error.message);
         }
     }
 );
+
+// delete a transaction
+export const deleteTransaction = createAsyncThunk(
+    'transactions/deleteTransaction',
+    async ({ id, uid }, { rejectWithValue }) => {
+        try {
+            const transactionDoc = doc(db, `users/${uid}/transactions`, id);
+            await deleteDoc(transactionDoc);
+            return id;
+        } catch (error) {
+            return rejectWithValue(error.message);
+        }
+    }
+)
 
 const transactionsSlice = createSlice({
     name: 'transactions',
@@ -145,37 +161,39 @@ const transactionsSlice = createSlice({
     // extra reducers are needed bcus im using async thunks 
     extraReducers: (builder) => {
         builder
-            // Handle fetch transactions 
             .addCase(fetchLastIncome.fulfilled, (state, action) => {
-                if (action.payload) {
-                    state.lastIncome = action.payload;  // This will update only the income, preserving other state
-                }
+                state.lastIncome = action.payload;
             })
 
             .addCase(fetchLastExpense.fulfilled, (state, action) => {
-                if (action.payload) {
-                    state.lastExpense = action.payload;  // This will update only the expense, preserving other state
-                }
+                state.lastExpense = action.payload;
             })
 
             .addCase(fetchTransactions.fulfilled, (state, action) => {
-                if (action.payload) {
-                    state.transactions = action.payload;  // Preserve both incomes and expenses
-                    transactionsSlice.caseReducers.calculateBalance(state); // re-calculate balance
-                }
+                state.transactions = action.payload;
+                transactionsSlice.caseReducers.calculateBalance(state);
             })
 
-            // Handle add transaction
             .addCase(addTransaction.fulfilled, (state, action) => {
                 state.transactions.push(action.payload);
-                transactionsSlice.caseReducers.calculateBalance(state); // re-calculate balance
+                transactionsSlice.caseReducers.calculateBalance(state);
 
                 if (action.payload.type === 'income') {
-                    state.lastIncome = action.payload; // update last income
+                    state.lastIncome = action.payload;  // update last income
                 } else if (action.payload.type === 'expense') {
                     state.lastExpense = action.payload; // update last expense 
                 }
             })
+
+            .addCase(deleteTransaction.fulfilled, (state, action) => {
+                state.transactions = state.transactions.filter(i => i.id !== action.payload)
+                transactionsSlice.caseReducers.calculateBalance(state);
+            })
+        // for setting the new balance .. but its not working atm 
+        /*  .addCase(updateSavingsGoalAmount.fulfilled, (state, action) => {
+            const { updatedTotalBalance } = action.payload;
+            state.totalBalance = updatedTotalBalance;
+        }) */
     },
 });
 
