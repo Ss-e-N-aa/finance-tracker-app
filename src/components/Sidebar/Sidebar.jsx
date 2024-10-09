@@ -5,10 +5,16 @@ import { HiCog6Tooth } from "react-icons/hi2";
 import { GrMoney } from "react-icons/gr";
 import { CgNotes } from "react-icons/cg";
 import { HiOutlineCash } from "react-icons/hi";
+import { useSelector } from 'react-redux';
 
 export default function Sidebar() {
+    const isDarkMode = useSelector((state) => state.theme.darkMode);
+
     return (
-        <aside className={styles.sidebar}>
+        <aside className={`
+          ${styles.sidebar}
+           ${isDarkMode ? styles.darkMode : ''}
+            `}>
             <nav>
                 <ul className={styles.ul}>
                     <li>
@@ -30,9 +36,9 @@ export default function Sidebar() {
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink className={styles.link} to='budgets'>
+                        <NavLink className={styles.link} to='savings-goals'>
                             <span className={styles.iconBudget}><HiOutlineCash /></span>
-                            Goals
+                            Savings Goals
                         </NavLink>
                     </li>
                     <li>

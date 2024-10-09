@@ -13,7 +13,7 @@ import PageNotFound from './pages/PageNotFound';
 import Incomes from './pages/Incomes';
 import Expenses from './pages/Expenses';
 import Settings from './pages/Settings';
-import Budgets from './pages/Budgets';
+import Budgets from './pages/SavingsGoals';
 import Overview from './pages/Overview';
 //     -----------------------------
 
@@ -32,7 +32,7 @@ export default function App() {
               <Route path='overview' element={<Overview />} />
               <Route path='incomes' element={<Incomes />} />
               <Route path='expenses' element={<Expenses />} />
-              <Route path='budgets' element={<Budgets />} />
+              <Route path='savings-goals' element={<Budgets />} />
               <Route path='settings' element={<Settings />} />
             </Route>
 

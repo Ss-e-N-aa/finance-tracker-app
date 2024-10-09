@@ -1,0 +1,63 @@
+.buttonContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+    margin-top: 20px;
+    width: 50%;
+
+    @media (max-width: 768px) {
+        width: 80%;
+        flex-direction: column;
+    }
+}
+
+.buttonContainer p {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 44px;
+    letter-spacing: 2px;
+    color: black;
+
+    @media (max-width: 768px) {
+        font-size: 16px;
+        line-height: 38px;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+}
+
+.themeBtn {
+    font-size: 19px;
+    font-weight: 700;
+
+    color: var(--brand-indigo);
+    text-align: center;
+    width: 220px;
+    padding: 0.5rem !important;
+    background-color: #fff;
+    border: 1px solid var(--brand-indigo);
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    height: auto !important;
+
+    &:hover {
+        cursor: pointer;
+        background: #3e237f;
+        color: white;
+    }
+
+    @media (max-width: 768px) {
+        width: 100%;
+        padding: 0.7rem;
+        font-size: 17px;
+        width: 180px;
+    }
+}
+
+#darkMode {
+    color: white;
+}

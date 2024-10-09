@@ -47,3 +47,23 @@
     margin-right: 10px;
     vertical-align: middle;
 }
+
+.darkMode {
+    background-color: var(--grey-custom);
+
+    .link {
+        color: var(--grey-300);
+
+        &:hover,
+        &:active,
+        &:active:link,
+        &:active:visited {
+            color: white;
+            background-color: var(--grey-600);
+        }
+    }
+
+    &.sidebar {
+        border-right: 1px solid var(--grey-500);
+    }
+}

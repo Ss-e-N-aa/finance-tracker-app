@@ -9,7 +9,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../../firebase';
 
 export default function Expenses() {
-    const { transactions, expensesTotal, lastExpense, searchTerm } = useSelector((state) => state.transactions);
+    const { transactions, expensesTotal, lastExpense, searchTerm, totalBalance } = useSelector((state) => state.transactions);
     const dispatch = useDispatch();
     const [user] = useAuthState(auth);
 
@@ -30,6 +30,12 @@ export default function Expenses() {
 
     return (
         <>
+            <section className='goalsSection'>
+                <ul className='cardList'>
+                    <li><Card title="Current Balance" amount={totalBalance} isFirst={true} /></li>
+                </ul>
+            </section>
+
             <section className="overview-section">
                 <ul className="card-list">
                     <li><Card title="Total Expenses" amount={expensesTotal} isFirst={true} addBtn modalType="expense" /></li>

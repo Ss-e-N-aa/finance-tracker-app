@@ -1,0 +1,41 @@
+.goalsSection {
+    margin-bottom: 30px;
+}
+
+.cardList {
+    display: flex;
+    gap: 4rem;
+    padding: 0;
+    list-style: none;
+    flex-wrap: wrap;
+    /* Ensures wrapping if the container is smaller than total card width */
+}
+
+#totalCard {
+    flex: none;
+    width: 489px;
+}
+
+.cardList li {
+    flex: none;
+    width: 489px;
+}
+
+/* Responsive layout */
+@media (max-width: 768px) {
+    .cardList {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .cardList li,
+    #totalCard {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .goalsSection {
+        gap: 1.5rem;
+    }
+}

@@ -1,0 +1,166 @@
+.card {
+    height: 180px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.card.noHeight .progressBar {
+    display: none;
+}
+
+.completedGoal {
+    border: 3px solid green;
+    box-shadow: 0 4px 8px rgba(73, 194, 33, 0.861);
+}
+
+.headerContainer {
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--grey-200);
+}
+
+.targetContainer,
+.headerContainer,
+.actionsContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.actionsContainer {
+    gap: 15px;
+}
+
+.deleteBtn {
+    opacity: 0.6;
+    cursor: pointer;
+}
+
+.deleteBtn:hover {
+    color: red;
+    opacity: 1;
+    text-decoration: underline;
+    transition: all 0.3s;
+}
+
+.card .updateBtn {
+    font-size: 19px;
+    font-weight: 700;
+
+    width: 110px;
+    border-radius: 5px;
+    color: var(--brand-indigo);
+    padding: 15px !important;
+    background-color: var(--grey-100);
+    border: 1px solid var(--brand-indigo);
+    cursor: pointer;
+
+    &:hover {
+        cursor: pointer;
+        background: #3e237f;
+        color: white;
+    }
+}
+
+.card button {
+    top: 20px;
+    right: 20px;
+    background-color: var(--blue-600);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    &:hover {
+        background-color: var(--blue-700);
+    }
+}
+
+.ofTargetContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+#targetText,
+#numStyle {
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--grey-500);
+}
+
+.card h4 {
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--grey-500);
+}
+
+.card p {
+    font-size: 30px;
+    font-weight: 500;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    line-height: 44px;
+    letter-spacing: 2px;
+    color: black;
+}
+
+.firstCard p {
+    color: var(--blue-600);
+}
+
+.darkMode {
+    background: var(--grey-700);
+
+    #targetText,
+    #numStyle {
+        color: var(--grey-300);
+    }
+
+    &.headerContainer {
+        border-bottom: 1px solid var(--grey-400);
+    }
+
+    &.card p {
+        color: white;
+    }
+
+    &.firstCard p {
+        color: #43FFFF;
+    }
+
+    &.card button:hover {
+        color: black;
+        background-color: #43FFFF;
+        border: none;
+    }
+
+    &.card .updateBtn {
+        color: #43FFFF;
+        background-color: var(--grey-800);
+        border: none;
+    }
+
+    &.card .deleteBtn {
+        color: #43FFFF;
+
+        border: none;
+
+        &:hover {
+            color: red;
+        }
+    }
+
+    &.card h4 {
+        color: #fff;
+    }
+
+}

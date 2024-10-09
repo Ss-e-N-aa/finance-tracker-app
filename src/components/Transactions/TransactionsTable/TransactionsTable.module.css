@@ -7,6 +7,8 @@
     display: flex;
     flex-direction: column;
     /* Allows for pagination to stay at the bottom */
+    overflow: auto;
+    /* Enable scrolling if content overflows */
 }
 
 .header {
@@ -40,6 +42,12 @@
 .transactionsTable {
     width: 100%;
     border-collapse: collapse;
+    max-width: 100%;
+    /* Prevent the table from exceeding the container width */
+}
+
+.transactionsTable thead {
+    background-color: var(--grey-100);
 }
 
 .transactionsTable th,
@@ -50,13 +58,23 @@
 }
 
 .transactionsTable th {
-    background-color: var(--grey-100);
     font-weight: 500;
     color: var(--grey-600);
 }
 
 .transactionsTable tr:last-child td {
     border-bottom: none;
+}
+
+.deleteBtn {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+
+    &:hover {
+        text-decoration: underline;
+        color: red;
+    }
 }
 
 /* Responsive layout */
@@ -67,5 +85,37 @@
 
     .pagination {
         font-size: 0.75rem;
+    }
+}
+
+.darkMode {
+    &.transactionsContainer {
+        background-color: var(--grey-700);
+        color: #000;
+        box-shadow: none;
+
+        .searchInput {
+            background-color: var(--grey-custom2);
+        }
+    }
+
+    &.transactionsTable th,
+    &.transactionsTable td {
+        color: #fff;
+        border-bottom: 1px solid var(--grey-400);
+    }
+
+    &.transactionsTable thead {
+        background-color: var(--grey-custom2);
+    }
+
+    &.transactionsContainer h2 {
+        color: #fff;
+    }
+
+    &.transactionsContainer input {
+        background-color: var(--grey-100);
+        border: none;
+        color: #fff;
     }
 }
