@@ -2,7 +2,7 @@
 
 a React application that helps users manage their personal finances by tracking income, expenses, and savings goals.
 
-## Live website
+## Live Demo
 https://finance-tracker-app-bay.vercel.app/
 
 ## Project Description
