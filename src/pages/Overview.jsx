@@ -6,6 +6,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchTransactions, fetchLastExpense, fetchLastIncome } from '../store/transactions-slice';
 import { transactionsActions } from '../store/transactions-slice';
+import { fetchAllSavingsGoals } from '../store/savingsGoals-slice';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../../firebase';
 import GoalsCard from '../components/GoalsCard/GoalsCard';
@@ -18,6 +19,7 @@ export default function Overview() {
 
     useEffect(() => {
         if (user) {
+            dispatch(fetchAllSavingsGoals(user.uid));
             dispatch(fetchTransactions(user.uid));
             dispatch(fetchLastExpense(user.uid));
             dispatch(fetchLastIncome(user.uid));
